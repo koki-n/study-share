@@ -13,6 +13,7 @@
         <button @click="uploadImage">プロフィールをアップデート</button>
       </p>
     </div>
+    <p>{{ this.uid }}</p>
   </div>
 </template>
 <script>
@@ -39,27 +40,9 @@ export default {
           console.log(user);
           this.username = user.displayName;
           this.uid = user.uid;
-          console.log(this.uid);
         }
       });
     },
-
-    // getImage() {
-    //   this.$axios
-    //     .request({
-    //       method: "get",
-    //       url: "http://127.0.0.1:8000/api/user/",
-    //       data: { uid: this.uid },
-    //     })
-    //     .then((response) => {
-    //       console.log("resdddddddd");
-    //       console.log(response);
-    //       // this.images = response.data;
-    //     })
-    //     .catch((err) => {
-    //       this.message = err;
-    //     });
-    // },
 
     confirmImage(e) {
       this.message = "";
@@ -84,6 +67,7 @@ export default {
       console.log(reader);
     },
     uploadImage() {
+      console.log(this.uid);
       let data = new FormData();
       data.append("file", this.file);
       data.append("uid", this.uid);
@@ -92,16 +76,14 @@ export default {
       console.log("data");
       console.log(data);
       this.$axios
-        .post("https://lit-escarpment-24044.herokuapp.com/api/user/", data)
+        .post("https://lit-escarpment-24044.herokuapp.com/api/user", data)
         .then((response) => {
           console.log("fdfd");
           console.log(response);
           this.getImage();
-          // this.message = response.data.success;
           this.confirmedImage = "";
           this.file = "";
 
-          // alert("updated");
           //ファイルを選択のクリア
           this.view = false;
           this.$nextTick(function () {
@@ -109,7 +91,6 @@ export default {
           });
         })
         .catch((err) => {
-          //   this.message = err.response.data.errors;
           console.log("era");
         });
     },

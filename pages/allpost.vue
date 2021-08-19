@@ -24,11 +24,7 @@
                   class="postuser"
                   src="@/assets/img/noimage.jpg"
                 />
-                <img
-                  v-else
-                  class="postuser"
-                  :src="'http://127.0.0.1:8000/' + `${post.path}`"
-                />
+                <img v-else class="postuser" :src="`${post.path}`" />
 
                 <p>{{ post.username }}</p>
               </div>
@@ -59,6 +55,7 @@
 </template>
 <script>
 import firebase from "~/plugins/firebase";
+import axios from "axios";
 export default {
   data() {
     return {
@@ -86,11 +83,12 @@ export default {
       });
     },
     async getPostData() {
-      const test = await this.$axios.get(
-        "https://lit-escarpment-24044.herokuapp.com/api/post/"
-      );
-      console.log(test);
-      this.posts = test.data.data;
+      await this.$axios
+        .get("https://lit-escarpment-24044.herokuapp.com/api/post")
+        .then((res) => {
+          console.log(res);
+          this.posts = res.data.data;
+        });
     },
     // 検索機能
     async search() {
@@ -101,32 +99,18 @@ export default {
       };
       console.log(sendData);
       const test = await this.$axios.post(
-        "https://lit-escarpment-24044.herokuapp.com/api/search/",
+        "https://lit-escarpment-24044.herokuapp.com/api/search",
         sendData
       );
       console.log(test);
       this.posts = test.data.data;
     },
-    // async getUserProfile() {
-    //   const test = await this.$axios.get("http://127.0.0.1:8000/api/user/");
-    //   console.log(test);
-    //   console.log(this.posts);
-    //   let a = "uid";
-    //   if (a in this.posts) {
-    //     console.lo("aru");
-    //   }
-    //   // console.log(getHashProperties(this.posts).includes("nishida"));
-    // },
-    // image(){
-
-    // }
   },
   computed: {},
 
   created() {
     this.getUserData();
     this.getPostData();
-    // this.getUserProfile();
   },
 };
 </script>

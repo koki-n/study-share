@@ -12,11 +12,7 @@
             src="@/assets/img/noimage.jpg"
           />
 
-          <img
-            v-else
-            class="postuser"
-            :src="'http://127.0.0.1:8000/' + `${posts.path}`"
-          />
+          <img v-else class="postuser" :src="`${posts.path}`" />
           <p>{{ this.posts.username }}</p>
         </div>
       </div>
@@ -32,16 +28,12 @@
         <div class="user">
           <div class="user-flex">
             <img
-              v-if="item.path == 'none'"
+              v-if="!item.path"
               class="postuser"
               src="@/assets/img/noimage.jpg"
             />
 
-            <img
-              v-else
-              class="postuser"
-              :src="'http://127.0.0.1:8000/' + `${item.path}`"
-            />
+            <img v-else class="postuser" :src="`${item.path}`" />
 
             <p>{{ item.username }}</p>
           </div>
@@ -53,7 +45,12 @@
     <div class="comment">
       <div class="user">
         <div class="user-flex">
-          <img class="postuser" src="@/assets/img/cat.jpg" />
+          <img
+            v-if="!currentUser"
+            class="postuser"
+            src="@/assets/img/cat.jpg"
+          />
+          <img v-else class="postuser" :src="`${this.currentUser}`" />
           <p>{{ this.username }}</p>
         </div>
       </div>
@@ -90,6 +87,7 @@ export default {
       comment: null,
       commentdata: [],
       posts: [],
+      currentUser: [],
       username: null,
       uid: null,
     };
@@ -102,25 +100,29 @@ export default {
           this.username = user.displayName;
           this.uid = user.uid;
         }
+        this.getImage();
       });
-    },
-    async commentUser() {
-      const id = 2;
-      const test = await this.$axios.get(
-        "https://lit-escarpment-24044.herokuapp.com/api/user/" + id
-      );
-      console.log(test);
-      console.log("dff");
     },
 
     async getPostData() {
-      const id = this.$route.params.id - 1;
+      const id = this.$route.params.id;
+      console.log(id);
       const test = await this.$axios.get(
-        "https://lit-escarpment-24044.herokuapp.com/api/comment/"
+        "https://lit-escarpment-24044.herokuapp.com/api/comment/" + id
       );
       console.log(test);
-      this.posts = test.data.data[id];
-      this.commentdata = test.data.data[id].comment;
+      this.posts = test.data.data[0];
+
+      this.commentdata = test.data.data[0].comment;
+    },
+    async getImage() {
+      const uid = this.uid;
+      console.log(this.uid);
+      const test = await this.$axios.get(
+        "https://lit-escarpment-24044.herokuapp.com/api/user/" + uid
+      );
+      console.log(test);
+      this.currentUser = test.data.data.path;
     },
 
     async addComment() {
@@ -131,35 +133,17 @@ export default {
         uid: this.uid,
       };
       const test = await this.$axios.post(
-        "https://lit-escarpment-24044.herokuapp.com/api/comment/",
+        "https://lit-escarpment-24044.herokuapp.com/api/comment",
         senddata
       );
       console.log(test);
       this.comment = "";
       this.getPostData();
     },
-    getImage() {
-      console.log(this.uid);
-      this.$axios
-        .request({
-          method: "get",
-          url: "https://lit-escarpment-24044.herokuapp.com/api/user/",
-          data: { uid: this.uid },
-        })
-        .then((response) => {
-          console.log("resdddddddd");
-          console.log(response);
-        })
-        .catch((err) => {
-          this.message = err;
-        });
-    },
   },
   created() {
-    this.getPostData();
     this.getUserData();
-    this.commentUser();
-    this.getImage();
+    this.getPostData();
   },
 };
 </script>

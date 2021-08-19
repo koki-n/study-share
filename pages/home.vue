@@ -60,34 +60,34 @@ export default {
         }
       });
     },
-    async getPostData() {
-      const senddata = {
-        uid: this.uid,
-      };
-      const test = await this.$axios.get(
-        "https://lit-escarpment-24044.herokuapp.com/api/post/",
-        senddata
-      );
-      console.log(test);
-      this.post = test.data.data;
-    },
-    async saveUserData() {
-      const senddata = {
-        uid: this.uid,
-        name: this.username,
-      };
-      const test = await this.$axios.get(
-        "https://lit-escarpment-24044.herokuapp.com/api/user/",
-        {
-          params: {
-            uid: this.$route.params.id,
-            name: this.name,
-          },
-        }
-      );
-      console.log(test);
-      console.log("test");
-    },
+    // async getPostData() {
+    //   const senddata = {
+    //     uid: this.uid,
+    //   };
+    //   const test = await this.$axios.get(
+    //     "https://lit-escarpment-24044.herokuapp.com/api/post/",
+    //     senddata
+    //   );
+    //   console.log(test);
+    //   this.post = test.data.data;
+    // },
+    // async saveUserData() {
+    //   const senddata = {
+    //     uid: this.uid,
+    //     name: this.username,
+    //   };
+    //   const test = await this.$axios.get(
+    //     "https://lit-escarpment-24044.herokuapp.com/api/user/",
+    //     {
+    //       params: {
+    //         uid: this.$route.params.id,
+    //         name: this.name,
+    //       },
+    //     }
+    //   );
+    //   console.log(test);
+    //   console.log("test");
+    // },
 
     async addPost() {
       const senddata = {
@@ -97,7 +97,7 @@ export default {
         uid: this.uid,
       };
       const test = await this.$axios.post(
-        "https://lit-escarpment-24044.herokuapp.com/api/post/",
+        "https://lit-escarpment-24044.herokuapp.com/api/post",
         senddata
       );
       console.log(test);
@@ -108,8 +108,8 @@ export default {
   },
   created() {
     this.getUserData();
-    this.getPostData();
-    this.saveUserData();
+    // this.getPostData();
+    // this.saveUserData();
   },
 };
 </script>

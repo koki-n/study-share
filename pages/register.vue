@@ -117,4 +117,7 @@ h2 {
   margin-top: 40px;
   border-radius: 5px;
 }
+/deep/ header nav {
+  display: none;
+}
 </style>
