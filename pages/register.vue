@@ -73,7 +73,7 @@ export default {
         .catch((error) => console.log(error));
 
       alert("アカウントを作成しました");
-      // this.$router.replace("/home");
+      this.$router.replace("/home");
     },
   },
 };

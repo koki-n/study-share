@@ -28,7 +28,7 @@
         <div class="user">
           <div class="user-flex">
             <img
-              v-if="!item.path"
+              v-if="item.path"
               class="postuser"
               src="@/assets/img/noimage.jpg"
             />
@@ -48,9 +48,9 @@
           <img
             v-if="!currentUser"
             class="postuser"
-            src="@/assets/img/cat.jpg"
+            src="@/assets/img/noimage.jpg"
           />
-          <img v-else class="postuser" :src="`${this.currentUser}`" />
+          <img v-else class="postuser" :src="`${this.currentUser.path}`" />
           <p>{{ this.username }}</p>
         </div>
       </div>
@@ -76,6 +76,7 @@
         </div>
       </validation-observer>
     </div>
+    <p>{{ currentUser }}</p>
   </div>
 </template>
 <script>
@@ -118,11 +119,14 @@ export default {
     async getImage() {
       const uid = this.uid;
       console.log(this.uid);
+      console.log("test");
       const test = await this.$axios.get(
         "https://lit-escarpment-24044.herokuapp.com/api/user/" + uid
       );
       console.log(test);
-      this.currentUser = test.data.data.path;
+      this.currentUser = test.data.data;
+      console.log(this.currentUser);
+      console.log("image");
     },
 
     async addComment() {

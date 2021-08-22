@@ -13,7 +13,6 @@
         <button @click="uploadImage">プロフィールをアップデート</button>
       </p>
     </div>
-    <p>{{ this.uid }}</p>
   </div>
 </template>
 <script>
