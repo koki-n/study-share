@@ -51,19 +51,14 @@ export default {
         this.confirmedImage = "";
         return;
       }
-      console.log(this.file);
       this.createImage(this.file);
     },
     createImage(file) {
-      console.log("test");
-      //   console.log(file);
       let reader = new FileReader();
-
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.confirmedImage = e.target.result;
       };
-      console.log(reader);
     },
     uploadImage() {
       console.log(this.uid);
@@ -72,17 +67,12 @@ export default {
       data.append("uid", this.uid);
       data.append("goal", this.goal);
       data.append("name", this.username);
-      console.log("data");
-      console.log(data);
       this.$axios
         .post("https://lit-escarpment-24044.herokuapp.com/api/user", data)
         .then((response) => {
-          console.log("fdfd");
-          console.log(response);
           this.getImage();
           this.confirmedImage = "";
           this.file = "";
-
           //ファイルを選択のクリア
           this.view = false;
           this.$nextTick(function () {
@@ -90,7 +80,7 @@ export default {
           });
         })
         .catch((err) => {
-          console.log("era");
+          console.log(err);
         });
     },
   },

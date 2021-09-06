@@ -54,40 +54,11 @@ export default {
     getUserData() {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          console.log(user);
           this.username = user.displayName;
           this.uid = user.uid;
         }
       });
     },
-    // async getPostData() {
-    //   const senddata = {
-    //     uid: this.uid,
-    //   };
-    //   const test = await this.$axios.get(
-    //     "https://lit-escarpment-24044.herokuapp.com/api/post/",
-    //     senddata
-    //   );
-    //   console.log(test);
-    //   this.post = test.data.data;
-    // },
-    // async saveUserData() {
-    //   const senddata = {
-    //     uid: this.uid,
-    //     name: this.username,
-    //   };
-    //   const test = await this.$axios.get(
-    //     "https://lit-escarpment-24044.herokuapp.com/api/user/",
-    //     {
-    //       params: {
-    //         uid: this.$route.params.id,
-    //         name: this.name,
-    //       },
-    //     }
-    //   );
-    //   console.log(test);
-    //   console.log("test");
-    // },
 
     async addPost() {
       const senddata = {
@@ -100,7 +71,6 @@ export default {
         "https://lit-escarpment-24044.herokuapp.com/api/post",
         senddata
       );
-      console.log(test);
       this.title = null;
       this.content = null;
       alert("投稿しました");
@@ -108,8 +78,6 @@ export default {
   },
   created() {
     this.getUserData();
-    // this.getPostData();
-    // this.saveUserData();
   },
 };
 </script>
@@ -130,7 +98,6 @@ textarea {
   width: 100%;
 }
 .new {
-  /* border: 1px solid grey; */
   border: 1px solid #e0e0e0;
   width: 60%;
   margin: 0 auto;

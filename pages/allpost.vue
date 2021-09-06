@@ -5,14 +5,12 @@
       <div class="content">
         <div class="search">
           <h3>検索</h3>
-          <!-- <div class="flex"> -->
           <label>投稿者 </label>
           <input type="text" v-model="searchName" />
           <label>タイトル </label>
           <input type="text" v-model="searchTitle" />
           <label>内容 </label>
           <input type="text" v-model="searchContent" />
-          <!-- </div> -->
           <button @click="search">検索</button>
         </div>
         <div class="allpost">
@@ -31,7 +29,6 @@
               <p>{{ post.created_at.substring(0, 10) }}</p>
             </div>
             <div class="post-content">
-              <!-- <p>title</p> -->
               <h3>{{ post.title }}</h3>
               <p v-if="post.content.length < 50">{{ post.content }}</p>
               <p v-else>{{ post.content.substring(0, 50) + ".." }}</p>
@@ -55,7 +52,6 @@
 </template>
 <script>
 import firebase from "~/plugins/firebase";
-import axios from "axios";
 export default {
   data() {
     return {
@@ -102,7 +98,6 @@ export default {
         "https://lit-escarpment-24044.herokuapp.com/api/search",
         sendData
       );
-      console.log(test);
       this.posts = test.data.data;
     },
   },

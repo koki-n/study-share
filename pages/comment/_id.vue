@@ -32,9 +32,7 @@
               class="postuser"
               src="@/assets/img/noimage.jpg"
             />
-
             <img v-else class="postuser" :src="`${item.path}`" />
-
             <p>{{ item.username }}</p>
           </div>
         </div>
@@ -76,7 +74,6 @@
         </div>
       </validation-observer>
     </div>
-    <p>{{ currentUser }}</p>
   </div>
 </template>
 <script>
@@ -111,7 +108,6 @@ export default {
       const test = await this.$axios.get(
         "https://lit-escarpment-24044.herokuapp.com/api/comment/" + id
       );
-      console.log(test);
       this.posts = test.data.data[0];
 
       this.commentdata = test.data.data[0].comment;
@@ -123,10 +119,7 @@ export default {
       const test = await this.$axios.get(
         "https://lit-escarpment-24044.herokuapp.com/api/user/" + uid
       );
-      console.log(test);
       this.currentUser = test.data.data;
-      console.log(this.currentUser);
-      console.log("image");
     },
 
     async addComment() {
@@ -140,7 +133,6 @@ export default {
         "https://lit-escarpment-24044.herokuapp.com/api/comment",
         senddata
       );
-      console.log(test);
       this.comment = "";
       this.getPostData();
     },
@@ -179,7 +171,6 @@ textarea {
   margin-left: auto;
 }
 .post {
-  /* height: 300px; */
   width: 60%;
   margin: 0 auto;
   box-shadow: 0 0 4px #cccccc;
@@ -202,7 +193,6 @@ textarea {
   object-fit: cover;
 }
 .post-content {
-  /* padding-left: 30px; */
   min-width: 250px;
 }
 .post-content h3 {
@@ -215,8 +205,7 @@ textarea {
 .post-content p {
   border: 1px solid #e0e0e0;
   background-color: #fefdfd;
-
-  /* height: 100px; */
+  word-wrap: break-word;
 }
 .commentlist {
   width: 60%;
